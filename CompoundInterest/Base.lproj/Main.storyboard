@@ -81,6 +81,9 @@
                                 <rect key="frame" x="109.5" y="455" width="101" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Рассчитать"/>
+                                <connections>
+                                    <action selector="calculateButtonIsTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="YLI-6R-P5V"/>
+                                </connections>
                             </button>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fc8-Pe-Odk">
                                 <rect key="frame" x="49.5" y="300.5" width="221" height="61.5"/>
