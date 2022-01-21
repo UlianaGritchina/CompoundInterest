@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        calculateButton.isEnabled = false
+        calculateButtonIsOn()
         settingsStackView.layer.cornerRadius = 14
         percentTF.rightView = UIView()
     }
@@ -41,6 +41,7 @@ class ViewController: UIViewController {
 
     
     @IBAction func settingsTapped(_ sender: Any) {
+        calculateButtonIsOn()
         userInterfaceIsOn()
 }
     
@@ -64,17 +65,15 @@ extension ViewController {
     
     private func calculateButtonIsOn() {
         
-        var textfieldsIsEmpty = true
+        var emptyTexFieldCount = textFieldCollection.count
         
         for textField in textFieldCollection {
             if textField.hasText {
-            textfieldsIsEmpty = false
-            } else {
-            textfieldsIsEmpty = true
+            emptyTexFieldCount -= 1
             }
         }
         
-        calculateButton.isEnabled = textfieldsIsEmpty ? false : true
+        calculateButton.isEnabled = emptyTexFieldCount == 0 ? true : false
         
     }
     
@@ -88,7 +87,6 @@ extension ViewController {
         mainStackView.alpha = userInterfaceIsOn == true ? 1 : 0.3
         settingsStackView.isHidden = userInterfaceIsOn
         segmentControl.isHidden = userInterfaceIsOn
-        calculateButton.isEnabled = userInterfaceIsOn
     }
     
     @objc private func didTapDone() {
