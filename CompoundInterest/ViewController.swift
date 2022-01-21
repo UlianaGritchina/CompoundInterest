@@ -29,10 +29,7 @@ class ViewController: UIViewController {
     
     private var currentTextField = UITextField()
     
-    
-    
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,7 +49,18 @@ class ViewController: UIViewController {
         segmentControl.selectedSegmentIndex == 0 ? (frequencyDepositLabel.text = "Ежемесячный депозит") : (frequencyDepositLabel.text = "Ежегодный депозит")
     }
     
+
+    @IBAction func calculateButtonIsTapped() {
+        checkPercentTF()
+        calculateButtonIsOn()
+    }
     
+   
+    
+}
+
+// MARK: - Private Methods
+extension ViewController {
     
     private func calculateButtonIsOn() {
         
@@ -88,7 +96,32 @@ class ViewController: UIViewController {
         view.endEditing(true)
     }
     
+    
+    private func checkPercentTF() {
+        
+        let percentTextFieldNumber = Int(percentTF.text ?? "0") ?? 0
+        
+        if percentTextFieldNumber < 0 || percentTextFieldNumber > 100 {
+            percentTF.text = ""
+         showAlert(title: "Неверный формат", message: "Введите число от 0 до 100")
+        }
+    }
+    
+    
+    
+    
+    private func showAlert(title: String, message: String, textField: UITextField? = nil) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { _ in
+            textField?.text = ""
+        }
+        alert.addAction(okAction)
+        present(alert, animated: true)
+    }
 }
+
+
+
 
 extension ViewController: UITextFieldDelegate {
     
