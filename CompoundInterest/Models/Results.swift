@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Resalts {
+struct Results {
     var period: Int
     var start: Float
     var mainResalt: Float

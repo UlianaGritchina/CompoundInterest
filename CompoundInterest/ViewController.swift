@@ -9,7 +9,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    
     @IBOutlet weak var firstDepositTF: UITextField!
     @IBOutlet weak var frequencyDepositTF: UITextField!
     @IBOutlet weak var depositTimeTF: UITextField!
@@ -17,19 +16,31 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var frequencyDepositLabel: UILabel!
     
-    
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var settingsStackView: UIStackView!
     @IBOutlet weak var calculateButton: UIButton!
     
-
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
     @IBOutlet var textFieldCollection: [UITextField]!
     
     private var currentTextField = UITextField()
     
-
+    private var firstDeposit: Float!
+    private var frequencyDeposit: Float!
+    private var depositTime: Int!
+    private var percent: Float!
+    private var sum: Float!
+    private var result: Float!
+    private var resultModel = Results(period: 0, start: 0, mainResalt: 0, resalts: [0], sum: 0)
+    private var results: [Float] = []
+    private var timeType: timeTypes = .months
+    
+    enum timeTypes {
+        case months
+        case years
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,26 +48,27 @@ class ViewController: UIViewController {
         settingsStackView.layer.cornerRadius = 14
         percentTF.rightView = UIView()
     }
-
-
     
     @IBAction func settingsTapped(_ sender: Any) {
         calculateButtonIsOn()
         userInterfaceIsOn()
-}
-    
+    }
     
     @IBAction func segmentControlValueChanged(_ sender: Any) {
         segmentControl.selectedSegmentIndex == 0 ? (frequencyDepositLabel.text = "Ежемесячный депозит") : (frequencyDepositLabel.text = "Ежегодный депозит")
+        
+        if segmentControl.selectedSegmentIndex == 0 {
+            timeType = .months
+        } else {
+            timeType = .years
+        }
     }
     
-
     @IBAction func calculateButtonIsTapped() {
         checkPercentTF()
         calculateButtonIsOn()
+        getResults()
     }
-    
-   
     
 }
 
@@ -69,21 +81,21 @@ extension ViewController {
         
         for textField in textFieldCollection {
             if textField.hasText {
-            emptyTexFieldCount -= 1
+                emptyTexFieldCount -= 1
             }
         }
         
         calculateButton.isEnabled = emptyTexFieldCount == 0 ? true : false
-        
     }
     
     private func userInterfaceIsOn() {
-    
+        
         let userInterfaceIsOn = segmentControl.isHidden ? false : true
-  
+        
         for textField in textFieldCollection {
             textField.isUserInteractionEnabled = userInterfaceIsOn
         }
+        
         mainStackView.alpha = userInterfaceIsOn == true ? 1 : 0.3
         settingsStackView.isHidden = userInterfaceIsOn
         segmentControl.isHidden = userInterfaceIsOn
@@ -101,12 +113,9 @@ extension ViewController {
         
         if percentTextFieldNumber < 0 || percentTextFieldNumber > 100 {
             percentTF.text = ""
-         showAlert(title: "Неверный формат", message: "Введите число от 0 до 100")
+            showAlert(title: "Неверный формат", message: "Введите число от 0 до 100")
         }
     }
-    
-    
-    
     
     private func showAlert(title: String, message: String, textField: UITextField? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -116,10 +125,45 @@ extension ViewController {
         alert.addAction(okAction)
         present(alert, animated: true)
     }
+    
+    private func getResults() {
+        sum = 0
+        result = 0
+        firstDeposit = Float(firstDepositTF.text ?? "0")
+        frequencyDeposit = Float(frequencyDepositTF.text ?? "0")
+        depositTime = Int(depositTimeTF.text ?? "0")
+        percent = Float(percentTF.text ?? "0")
+        results = []
+        result = firstDeposit
+        
+        if timeType == .months {
+            
+            percent = percent / 12
+            result = result + (result * percent / 100)
+            results.append(result)
+            
+            for _ in 1..<depositTime {
+                sum += frequencyDeposit
+                result = result + frequencyDeposit + (((result + frequencyDeposit) * percent / 100))
+                results.append(result)
+            }
+            
+        } else {
+            for _ in 0..<depositTime {
+                result += frequencyDeposit
+                percent = result * percent / 100
+                result += percent
+                results.append(result)
+            }
+        }
+        
+        
+        
+        print(results)
+        
+        resultModel = Results(period: depositTime, start: firstDeposit, mainResalt: results.last ?? 0, resalts: results, sum: sum)
+    }
 }
-
-
-
 
 extension ViewController: UITextFieldDelegate {
     
@@ -164,7 +208,7 @@ extension ViewController: UITextFieldDelegate {
         }
     }
     
-     func textFieldDidBeginEditing(_ textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         let keyboardToolbar = UIToolbar()
         keyboardToolbar.sizeToFit()
         textField.inputAccessoryView = keyboardToolbar
@@ -174,7 +218,7 @@ extension ViewController: UITextFieldDelegate {
             target: self,
             action: #selector(didTapDone)
         )
-         
+        
         let nextButton = UIBarButtonItem(
             image: UIImage(systemName: "arrow.down"),
             style: .done,
@@ -182,14 +226,13 @@ extension ViewController: UITextFieldDelegate {
             action: #selector(nextTF)
         )
         
-         let previousButton = UIBarButtonItem(
-             image: UIImage(systemName: "arrow.up"),
-             style: .done,
-             target: self,
-             action: #selector(previousTF)
-         )
-         
-         
+        let previousButton = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.up"),
+            style: .done,
+            target: self,
+            action: #selector(previousTF)
+        )
+        
         let flexBarButton = UIBarButtonItem(
             barButtonSystemItem: .flexibleSpace,
             target: nil,

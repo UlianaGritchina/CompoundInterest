@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E5D21E1279AFBC300271A2F /* Resalts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5D21E0279AFBC300271A2F /* Resalts.swift */; };
+		0E5D21E1279AFBC300271A2F /* Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5D21E0279AFBC300271A2F /* Results.swift */; };
 		0EF41E3B279ADE9B00B39D7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF41E3A279ADE9B00B39D7C /* AppDelegate.swift */; };
 		0EF41E3D279ADE9B00B39D7C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF41E3C279ADE9B00B39D7C /* SceneDelegate.swift */; };
 		0EF41E3F279ADE9B00B39D7C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF41E3E279ADE9B00B39D7C /* ViewController.swift */; };
@@ -17,7 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0E5D21E0279AFBC300271A2F /* Resalts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resalts.swift; sourceTree = "<group>"; };
+		0E5D21E0279AFBC300271A2F /* Results.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Results.swift; sourceTree = "<group>"; };
 		0EF41E37279ADE9B00B39D7C /* CompoundInterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CompoundInterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0EF41E3A279ADE9B00B39D7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0EF41E3C279ADE9B00B39D7C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		0E5D21E2279AFBC800271A2F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0E5D21E0279AFBC300271A2F /* Resalts.swift */,
+				0E5D21E0279AFBC300271A2F /* Results.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -151,7 +151,7 @@
 			files = (
 				0EF41E3F279ADE9B00B39D7C /* ViewController.swift in Sources */,
 				0EF41E3B279ADE9B00B39D7C /* AppDelegate.swift in Sources */,
-				0E5D21E1279AFBC300271A2F /* Resalts.swift in Sources */,
+				0E5D21E1279AFBC300271A2F /* Results.swift in Sources */,
 				0EF41E3D279ADE9B00B39D7C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
