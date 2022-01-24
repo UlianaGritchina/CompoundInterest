@@ -28,21 +28,28 @@ class ViewController: UIViewController {
     @IBOutlet var textFieldCollection: [UITextField]!
     
     private var currentTextField = UITextField()
+    private var isUserInterfaceOn = true
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        userInterfaceIsOn()
         calculateButtonIsOn()
         settingsStackView.layer.cornerRadius = 14
-        percentTF.rightView = UIView()
     }
 
 
     
-    @IBAction func settingsTapped(_ sender: Any) {
-        calculateButtonIsOn()
-        userInterfaceIsOn()
+    @IBAction func settingsTapped(_ sender: Bool) {
+        
+        switch isUserInterfaceOn {
+        case true:
+            showSettings()
+            isUserInterfaceOn = false
+        case false:
+            userInterfaceIsOn()
+            isUserInterfaceOn = true
+        }
 }
     
     
@@ -53,7 +60,6 @@ class ViewController: UIViewController {
 
     @IBAction func calculateButtonIsTapped() {
         checkPercentTF()
-        calculateButtonIsOn()
     }
     
    
@@ -78,16 +84,21 @@ extension ViewController {
     }
     
     private func userInterfaceIsOn() {
-    
-        let userInterfaceIsOn = segmentControl.isHidden ? false : true
-  
+        mainStackView.alpha = 1
+        settingsStackView.isHidden = true
         for textField in textFieldCollection {
-            textField.isUserInteractionEnabled = userInterfaceIsOn
+            textField.isUserInteractionEnabled = true
         }
-        mainStackView.alpha = userInterfaceIsOn == true ? 1 : 0.3
-        settingsStackView.isHidden = userInterfaceIsOn
-        segmentControl.isHidden = userInterfaceIsOn
     }
+    
+    private func showSettings() {
+        mainStackView.alpha = 0.3
+        settingsStackView.isHidden = false
+        for textField in textFieldCollection {
+            textField.isUserInteractionEnabled = false
+        }
+    }
+
     
     @objc private func didTapDone() {
         calculateButtonIsOn()
@@ -99,9 +110,9 @@ extension ViewController {
         
         let percentTextFieldNumber = Int(percentTF.text ?? "0") ?? 0
         
-        if percentTextFieldNumber < 0 || percentTextFieldNumber > 100 {
+        if percentTextFieldNumber <= 0 || percentTextFieldNumber > 100 {
             percentTF.text = ""
-         showAlert(title: "Неверный формат", message: "Введите число от 0 до 100")
+         showAlert(title: "Указан неверный процент", message: "Введите число от 1 до 100")
         }
     }
     
@@ -121,12 +132,13 @@ extension ViewController {
 
 
 
+
 extension ViewController: UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
-        segmentControl.isHidden = false
+        isUserInterfaceOn = true
         userInterfaceIsOn()
         calculateButtonIsOn()
     }
