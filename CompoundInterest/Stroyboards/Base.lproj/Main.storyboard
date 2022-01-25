@@ -127,7 +127,7 @@
                                 <buttonConfiguration key="configuration" style="filled" title="Рассчитать"/>
                                 <connections>
                                     <action selector="calculateButtonIsTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="YLI-6R-P5V"/>
-                                    <segue destination="Tky-MN-Sb3" kind="presentation" id="j3v-w5-0ex"/>
+                                    <segue destination="Tky-MN-Sb3" kind="presentation" identifier="exitSegue" id="j3v-w5-0ex"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="fc8-Pe-Odk">
@@ -202,11 +202,11 @@
             <objects>
                 <viewController id="Mak-Qd-BPL" customClass="ResultViewController" customModule="CompoundInterest" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dI2-zS-tPz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="YoX-xI-JlL">
-                                <rect key="frame" x="16" y="56" width="288" height="223"/>
+                                <rect key="frame" x="16" y="44" width="288" height="223"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="AIa-Wv-y7c">
                                         <rect key="frame" x="0.0" y="0.0" width="165" height="51"/>
@@ -271,6 +271,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZZ2-qg-gHi">
+                        <barButtonItem key="leftBarButtonItem" title=" Назад" id="ngu-vX-NGo">
+                            <connections>
+                                <segue destination="pUD-t9-GFQ" kind="unwind" unwindAction="unwindSegueToMainScreenWithSegue:" id="mGS-qw-UxI"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Подробнее " id="o5O-3c-xRF">
                             <connections>
                                 <segue destination="jeW-pU-oBg" kind="presentation" id="lDg-8A-EGX"/>
@@ -278,25 +283,26 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="allDeposits" destination="bCZ-8H-pLr" id="Ip8-3L-KKa"/>
-                        <outlet property="percentProfit" destination="fzl-D6-vy9" id="c3S-Yq-w2f"/>
+                        <outlet property="allDeposits" destination="NFI-PW-SvW" id="NI6-E6-PA6"/>
+                        <outlet property="percentProfit" destination="mI8-is-2hN" id="ONF-Wr-57N"/>
                         <outlet property="resultLabel" destination="fju-Z9-Dbk" id="9zi-R7-G2V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UFr-ig-FNA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="pUD-t9-GFQ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2776.875" y="83.450704225352112"/>
         </scene>
         <!--Итого-->
         <scene sceneID="SjT-OL-K3I">
             <objects>
-                <tableViewController id="hTB-ZN-V5u" sceneMemberID="viewController">
+                <tableViewController modalPresentationStyle="fullScreen" id="hTB-ZN-V5u" customClass="MoreResultTableViewController" customModule="CompoundInterest" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="PDD-rJ-j7E">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="fgt-wo-35n">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="fgt-wo-35n">
                                 <rect key="frame" x="0.0" y="44.5" width="320" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fgt-wo-35n" id="JDY-C2-yAO">
@@ -314,7 +320,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ljk-NV-Ucn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4688" y="83"/>
+            <point key="canvasLocation" x="4687.5" y="82.394366197183103"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ld3-Lx-pEX">
@@ -353,10 +359,10 @@
         <!--Navigation Controller-->
         <scene sceneID="PY5-n4-a6s">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tky-MN-Sb3" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="Tky-MN-Sb3" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="el1-rZ-x1r">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

@@ -28,15 +28,16 @@ class ViewController: UIViewController {
     
     private var currentTextField = UITextField()
     private var isUserInterfaceOn = true
-    private var resultModel = Results(period: 0, start: 0, mainResalt: 0, resalts: [0], sum: 0)
-
+    
+    
+    
+    private var resultModel = Results(period: 0, start: 0, mainResult: 0, results: [0], sum: 0)
     private var firstDeposit: Float!
     private var frequencyDeposit: Float!
     private var depositTime: Int!
     private var percent: Float!
     private var sum: Float!
     private var result: Float!
-    private var restModel = Results(period: 0, start: 0, mainResalt: 0, resalts: [0], sum: 0)
     private var results: [Float] = []
     private var timeType: timeTypes = .months
 
@@ -55,11 +56,12 @@ class ViewController: UIViewController {
 
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let resultVC = segue.destination as? ResultViewController else {return}
-        
-        getResults()
-        resultVC.resultModel = restModel
+        guard let navigationVC = segue.destination as? UINavigationController else { return }
+        guard let resultVC = navigationVC.topViewController as? ResultViewController else {return}
+        resultVC.resultModel = resultModel
     }
+    
+    @IBAction func unwindSegueToMainScreen(segue: UIStoryboardSegue) {}
     
     
     @IBAction func settingsTapped(_ sender: Bool) {
@@ -77,10 +79,13 @@ class ViewController: UIViewController {
     
     @IBAction func segmentControlValueChanged(_ sender: Any) {
         segmentControl.selectedSegmentIndex == 0 ? (frequencyDepositLabel.text = "Ежемесячный депозит") : (frequencyDepositLabel.text = "Ежегодный депозит")
+        timeType = .years
     }
     
 
     @IBAction func calculateButtonIsTapped() {
+        getResults()
+        print(resultModel)
         checkPercentTF()
     }
     
@@ -180,7 +185,7 @@ extension ViewController {
                 results.append(result)
             }
         }
-        resultModel = Results(period: depositTime, start: firstDeposit, mainResalt: results.last ?? 0, resalts: results, sum: sum)
+        resultModel = Results(period: depositTime, start: firstDeposit, mainResult: results.last ?? 0, results: results, sum: sum)
     }
 }
 

@@ -9,10 +9,10 @@ import Foundation
 struct Results {
     var period: Int
     var start: Float
-    var mainResalt: Float
-    var resalts: [Float]
+    var mainResult: Float
+    var results: [Float]
     var sum: Float
     var proc: Float {
-        mainResalt - sum - start
+        mainResult - sum - start
     }
 }

@@ -18,8 +18,16 @@ class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        resultLabel.text = String(resultModel.mainResalt)
-        allDeposits.text = String(resultModel.sum)
-        percentProfit.text = String(resultModel.proc)
+        print(resultModel.results)
+        
+        resultLabel.text = String(format: "%.2f", resultModel.mainResult)
+        allDeposits.text = String(format: "%.2f", resultModel.sum)
+        percentProfit.text = String(format: "%.2f", resultModel.proc)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let navigationVC = segue.destination as? UINavigationController else { return }
+        guard let moreResultVC = navigationVC.topViewController as? MoreResultTableViewController else {return}
+        moreResultVC.resultModel = resultModel
     }
 }
