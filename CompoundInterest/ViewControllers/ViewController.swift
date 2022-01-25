@@ -29,23 +29,9 @@ class ViewController: UIViewController {
     private var currentTextField = UITextField()
     private var isUserInterfaceOn = true
     
-    
-    
-    private var resultModel = Results(period: 0, start: 0, mainResult: 0, results: [0], sum: 0)
-    private var firstDeposit: Float!
-    private var frequencyDeposit: Float!
-    private var depositTime: Int!
-    private var percent: Float!
-    private var sum: Float!
-    private var result: Float!
-    private var results: [Float] = []
-    private var timeType: timeTypes = .months
+    private var resultModel = Results(results: [], totalDeposits: 0, depositTime: [])
 
-    
-    enum timeTypes {
-        case months
-        case years
-    }
+    var timeType = TimeTypes.months
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,18 +65,14 @@ class ViewController: UIViewController {
     
     @IBAction func segmentControlValueChanged(_ sender: Any) {
         segmentControl.selectedSegmentIndex == 0 ? (frequencyDepositLabel.text = "Ежемесячный депозит") : (frequencyDepositLabel.text = "Ежегодный депозит")
-        timeType = .years
+        segmentControl.selectedSegmentIndex == 0 ? (timeType = .months) : (timeType = .years)
     }
     
 
     @IBAction func calculateButtonIsTapped() {
-        getResults()
-        print(resultModel)
+        getResult()
         checkPercentTF()
     }
-    
-   
-    
 }
 
 // MARK: - Private Methods
@@ -155,37 +137,35 @@ extension ViewController {
         present(alert, animated: true)
     }
     
-    private func getResults() {
-        sum = 0
-        result = 0
-        firstDeposit = Float(firstDepositTF.text ?? "0")
-        frequencyDeposit = Float(frequencyDepositTF.text ?? "0")
-        depositTime = Int(depositTimeTF.text ?? "0")
-        percent = Float(percentTF.text ?? "0")
-        results = []
-        result = firstDeposit
+    
+    private func getResult () {
         
-        if timeType == .months {
+        guard var firstDeposit = Float(firstDepositTF.text ?? "0") else { return }
+        guard let frequencyDeposit = Float(frequencyDepositTF.text ?? "0") else { return }
+        guard let depositTime = Int(depositTimeTF.text ?? "0") else { return }
+        guard let percent = Float(percentTF.text ?? "0") else { return }
+
+        switch timeType {
             
-            percent = percent / 12
-            result = result + (result * percent / 100)
-            results.append(result)
+        case .months:
+            resultModel.totalDeposits = Int(firstDeposit + frequencyDeposit * Float(depositTime) * 12)
             
-            for _ in 1..<depositTime {
-                sum += frequencyDeposit
-                result = result + frequencyDeposit + (((result + frequencyDeposit) * percent / 100))
-                results.append(result)
+            for i in 1...depositTime {
+                let result = firstDeposit * pow(1 + percent / 100, 1) + frequencyDeposit * 12
+                firstDeposit = result
+                resultModel.results.append(Int(round(firstDeposit * 1)) / 1)
+                resultModel.depositTime.append(i)
             }
+        case .years:
+            resultModel.totalDeposits = Int(firstDeposit + frequencyDeposit * Float(depositTime))
             
-        } else {
-            for _ in 0..<depositTime {
-                result += frequencyDeposit
-                percent = result * percent / 100
-                result += percent
-                results.append(result)
+            for i in 1...depositTime {
+                let result = firstDeposit * pow(1 + percent / 100, 1) + frequencyDeposit
+                firstDeposit = result
+                resultModel.results.append(Int(round(firstDeposit * 1)) / 1)
+                resultModel.depositTime.append(i)
             }
         }
-        resultModel = Results(period: depositTime, start: firstDeposit, mainResult: results.last ?? 0, results: results, sum: sum)
     }
 }
 

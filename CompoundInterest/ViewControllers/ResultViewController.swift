@@ -20,9 +20,9 @@ class ResultViewController: UIViewController {
         
         print(resultModel.results)
         
-        resultLabel.text = String(format: "%.2f", resultModel.mainResult)
-        allDeposits.text = String(format: "%.2f", resultModel.sum)
-        percentProfit.text = String(format: "%.2f", resultModel.proc)
+        resultLabel.text = String(resultModel.total)
+        allDeposits.text = String(resultModel.totalDeposits)
+        percentProfit.text = String(resultModel.profit)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

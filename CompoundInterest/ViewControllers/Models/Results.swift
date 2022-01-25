@@ -6,13 +6,21 @@
 //
 
 import Foundation
+
 struct Results {
-    var period: Int
-    var start: Float
-    var mainResult: Float
-    var results: [Float]
-    var sum: Float
-    var proc: Float {
-        mainResult - sum - start
+    var results: [Int]
+    var totalDeposits: Int
+    var total: Int {
+        results.last!
     }
+    var profit: Int {
+        results.last! - totalDeposits
+    }
+    
+    var depositTime: [Int]
+}
+
+enum TimeTypes {
+    case months
+    case years
 }

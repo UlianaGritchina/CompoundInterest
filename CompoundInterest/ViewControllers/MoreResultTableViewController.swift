@@ -15,19 +15,23 @@ class MoreResultTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        resultModel.results.count
+        resultModel.depositTime.count
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        "Год \(resultModel.depositTime[section])"
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        resultModel.results.count
+        1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         var content = cell.defaultContentConfiguration()
-        let result = resultModel.results[indexPath.row]
+        let result = resultModel.results[indexPath.section]
         
-        content.text = String(format: "%.2f", result)
+        content.text = String(result)
         cell.contentConfiguration = content
         
         return cell
