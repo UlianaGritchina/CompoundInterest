@@ -28,7 +28,6 @@ class ViewController: UIViewController {
     
     private var currentTextField = UITextField()
     private var isUserInterfaceOn = true
-    private var resultModel = Results(period: 0, start: 0, mainResalt: 0, resalts: [0], sum: 0)
 
     private var firstDeposit: Float!
     private var frequencyDeposit: Float!
@@ -40,7 +39,6 @@ class ViewController: UIViewController {
     private var results: [Float] = []
     private var timeType: timeTypes = .months
 
-    
     enum timeTypes {
         case months
         case years
@@ -55,10 +53,11 @@ class ViewController: UIViewController {
 
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let resultVC = segue.destination as? ResultViewController else {return}
-        
-        getResults()
-        resultVC.resultModel = restModel
+        if let navigationVC = segue.destination as? UINavigationController {
+            let resultVC = navigationVC.topViewController as? ResultViewController
+            getResults()
+            resultVC?.resultModel = restModel
+        }
     }
     
     
@@ -83,9 +82,6 @@ class ViewController: UIViewController {
     @IBAction func calculateButtonIsTapped() {
         checkPercentTF()
     }
-    
-   
-    
 }
 
 // MARK: - Private Methods
@@ -180,7 +176,8 @@ extension ViewController {
                 results.append(result)
             }
         }
-        resultModel = Results(period: depositTime, start: firstDeposit, mainResalt: results.last ?? 0, resalts: results, sum: sum)
+        
+        restModel = Results(period: depositTime, start: firstDeposit, mainResalt: results.last ?? 0, resalts: results, sum: sum)
     }
 }
 

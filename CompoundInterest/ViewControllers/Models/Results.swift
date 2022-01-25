@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 struct Results {
     var period: Int
     var start: Float
