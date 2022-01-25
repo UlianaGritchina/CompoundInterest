@@ -17,7 +17,6 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var frequencyDepositLabel: UILabel!
     
-    
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var settingsStackView: UIStackView!
     @IBOutlet weak var calculateButton: UIButton!
@@ -29,8 +28,24 @@ class ViewController: UIViewController {
     
     private var currentTextField = UITextField()
     private var isUserInterfaceOn = true
-    
+    private var resultModel = Results(period: 0, start: 0, mainResalt: 0, resalts: [0], sum: 0)
 
+    private var firstDeposit: Float!
+    private var frequencyDeposit: Float!
+    private var depositTime: Int!
+    private var percent: Float!
+    private var sum: Float!
+    private var result: Float!
+    private var restModel = Results(period: 0, start: 0, mainResalt: 0, resalts: [0], sum: 0)
+    private var results: [Float] = []
+    private var timeType: timeTypes = .months
+
+    
+    enum timeTypes {
+        case months
+        case years
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         userInterfaceIsOn()
@@ -39,6 +54,13 @@ class ViewController: UIViewController {
     }
 
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let resultVC = segue.destination as? ResultViewController else {return}
+        
+        getResults()
+        resultVC.resultModel = restModel
+    }
+    
     
     @IBAction func settingsTapped(_ sender: Bool) {
         
@@ -126,6 +148,39 @@ extension ViewController {
         }
         alert.addAction(okAction)
         present(alert, animated: true)
+    }
+    
+    private func getResults() {
+        sum = 0
+        result = 0
+        firstDeposit = Float(firstDepositTF.text ?? "0")
+        frequencyDeposit = Float(frequencyDepositTF.text ?? "0")
+        depositTime = Int(depositTimeTF.text ?? "0")
+        percent = Float(percentTF.text ?? "0")
+        results = []
+        result = firstDeposit
+        
+        if timeType == .months {
+            
+            percent = percent / 12
+            result = result + (result * percent / 100)
+            results.append(result)
+            
+            for _ in 1..<depositTime {
+                sum += frequencyDeposit
+                result = result + frequencyDeposit + (((result + frequencyDeposit) * percent / 100))
+                results.append(result)
+            }
+            
+        } else {
+            for _ in 0..<depositTime {
+                result += frequencyDeposit
+                percent = result * percent / 100
+                result += percent
+                results.append(result)
+            }
+        }
+        resultModel = Results(period: depositTime, start: firstDeposit, mainResalt: results.last ?? 0, resalts: results, sum: sum)
     }
 }
 
