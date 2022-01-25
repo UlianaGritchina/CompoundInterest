@@ -18,8 +18,6 @@ class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(resultModel.results)
-        
         resultLabel.text = String(resultModel.total)
         allDeposits.text = String(resultModel.totalDeposits)
         percentProfit.text = String(resultModel.profit)

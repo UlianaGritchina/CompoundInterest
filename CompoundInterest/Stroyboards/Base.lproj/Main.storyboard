@@ -179,12 +179,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="calculateButton" destination="MR9-qU-Lwb" id="yhP-IF-kIQ"/>
-                        <outlet property="depositTimeTF" destination="Vf5-3D-lEy" id="OBV-Ro-anb"/>
-                        <outlet property="firstDepositTF" destination="9yf-hT-j7W" id="6Qe-7l-Opb"/>
+                        <outlet property="depositTimeTextField" destination="Vf5-3D-lEy" id="eGa-6I-YYg"/>
+                        <outlet property="firstDepositTextField" destination="9yf-hT-j7W" id="KgK-ci-ZcG"/>
                         <outlet property="frequencyDepositLabel" destination="pFx-Za-Tqs" id="TVW-Hx-loE"/>
-                        <outlet property="frequencyDepositTF" destination="IwB-I4-N6F" id="1QY-MU-omF"/>
+                        <outlet property="frequencyDepositTextField" destination="IwB-I4-N6F" id="oiZ-e2-s7b"/>
                         <outlet property="mainStackView" destination="Mdf-Jd-TqY" id="NVN-mw-43v"/>
-                        <outlet property="percentTF" destination="fug-1E-YjF" id="69x-D8-pe7"/>
+                        <outlet property="percentTextField" destination="fug-1E-YjF" id="MuG-K9-ZjA"/>
                         <outlet property="segmentControl" destination="AuH-es-QPU" id="XzY-E2-dBy"/>
                         <outlet property="settingsStackView" destination="fc8-Pe-Odk" id="hZb-BT-zEP"/>
                         <outletCollection property="textFieldCollection" destination="9yf-hT-j7W" collectionClass="NSMutableArray" id="ak5-UU-bpO"/>

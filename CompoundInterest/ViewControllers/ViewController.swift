@@ -10,10 +10,10 @@ import UIKit
 class ViewController: UIViewController {
     
     
-    @IBOutlet weak var firstDepositTF: UITextField!
-    @IBOutlet weak var frequencyDepositTF: UITextField!
-    @IBOutlet weak var depositTimeTF: UITextField!
-    @IBOutlet weak var percentTF: UITextField!
+    @IBOutlet weak var firstDepositTextField: UITextField!
+    @IBOutlet weak var frequencyDepositTextField: UITextField!
+    @IBOutlet weak var depositTimeTextField: UITextField!
+    @IBOutlet weak var percentTextField: UITextField!
     
     @IBOutlet weak var frequencyDepositLabel: UILabel!
     
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     
     private var resultModel = Results(results: [], totalDeposits: 0, depositTime: [])
 
-    var timeType = TimeTypes.months
+    private var timeType = TimeTypes.months
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,10 +117,10 @@ extension ViewController {
     
     private func checkPercentTF() {
         
-        let percentTextFieldNumber = Int(percentTF.text ?? "0") ?? 0
+        let percentTextFieldNumber = Int(percentTextField.text ?? "0") ?? 0
         
         if percentTextFieldNumber <= 0 || percentTextFieldNumber > 100 {
-            percentTF.text = ""
+            percentTextField.text = ""
          showAlert(title: "Указан неверный процент", message: "Введите число от 1 до 100")
         }
     }
@@ -140,10 +140,10 @@ extension ViewController {
     
     private func getResult () {
         
-        guard var firstDeposit = Float(firstDepositTF.text ?? "0") else { return }
-        guard let frequencyDeposit = Float(frequencyDepositTF.text ?? "0") else { return }
-        guard let depositTime = Int(depositTimeTF.text ?? "0") else { return }
-        guard let percent = Float(percentTF.text ?? "0") else { return }
+        guard var firstDeposit = Float(firstDepositTextField.text ?? "0") else { return }
+        guard let frequencyDeposit = Float(frequencyDepositTextField.text ?? "0") else { return }
+        guard let depositTime = Int(depositTimeTextField.text ?? "0") else { return }
+        guard let percent = Float(percentTextField.text ?? "0") else { return }
 
         switch timeType {
             
@@ -191,28 +191,28 @@ extension ViewController: UITextFieldDelegate {
     @objc private func nextTF() {
         
         switch currentTextField {
-        case firstDepositTF:
-            frequencyDepositTF.becomeFirstResponder()
-        case frequencyDepositTF:
-            depositTimeTF.becomeFirstResponder()
-        case depositTimeTF:
-            percentTF.becomeFirstResponder()
+        case firstDepositTextField:
+            frequencyDepositTextField.becomeFirstResponder()
+        case frequencyDepositTextField:
+            depositTimeTextField.becomeFirstResponder()
+        case depositTimeTextField:
+            percentTextField.becomeFirstResponder()
         default:
-            firstDepositTF.becomeFirstResponder()
+            firstDepositTextField.becomeFirstResponder()
         }
     }
     
     @objc private func previousTF() {
         
         switch currentTextField {
-        case firstDepositTF:
-            percentTF.becomeFirstResponder()
-        case frequencyDepositTF:
-            firstDepositTF.becomeFirstResponder()
-        case depositTimeTF:
-            frequencyDepositTF.becomeFirstResponder()
+        case firstDepositTextField:
+            percentTextField.becomeFirstResponder()
+        case frequencyDepositTextField:
+            firstDepositTextField.becomeFirstResponder()
+        case depositTimeTextField:
+            frequencyDepositTextField.becomeFirstResponder()
         default:
-            firstDepositTF.becomeFirstResponder()
+            firstDepositTextField.becomeFirstResponder()
         }
     }
     
