@@ -140,34 +140,29 @@ extension ViewController {
     
     private func getResult () {
         
-        guard var firstDeposit = Float(firstDepositTextField.text ?? "0") else { return }
-        guard let frequencyDeposit = Float(frequencyDepositTextField.text ?? "0") else { return }
-        guard let depositTime = Int(depositTimeTextField.text ?? "0") else { return }
-        guard let percent = Float(percentTextField.text ?? "0") else { return }
-
         switch timeType {
-            
         case .months:
-            resultModel.totalDeposits = Int(firstDeposit + frequencyDeposit * Float(depositTime) * 12)
-            
-            for i in 1...depositTime {
-                let result = firstDeposit * pow(1 + percent / 100, 1) + frequencyDeposit * 12
-                firstDeposit = result
-                resultModel.results.append(Int(round(firstDeposit * 1)) / 1)
-                resultModel.depositTime.append(i)
-            }
+            getResults(withPeriod: 12)
         case .years:
-            resultModel.totalDeposits = Int(firstDeposit + frequencyDeposit * Float(depositTime))
+            getResults(withPeriod: 1)
+        }
+
+        func getResults(withPeriod: Float) {
+            
+            guard var firstDeposit = Float(firstDepositTextField.text ?? "0") else { return }
+            guard let frequencyDeposit = Float(frequencyDepositTextField.text ?? "0") else { return }
+            guard let depositTime = Int(depositTimeTextField.text ?? "0") else { return }
+            guard let percent = Float(percentTextField.text ?? "0") else { return }
+            
+            resultModel.totalDeposits = Int(firstDeposit + frequencyDeposit * Float(depositTime) * withPeriod)
             
             for i in 1...depositTime {
-                let result = firstDeposit * pow(1 + percent / 100, 1) + frequencyDeposit
+                let result = firstDeposit * pow(1 + percent / 100, 1) + frequencyDeposit * withPeriod
                 firstDeposit = result
                 resultModel.results.append(Int(round(firstDeposit * 1)) / 1)
                 resultModel.depositTime.append(i)
             }
         }
-        
-        restModel = Results(period: depositTime, start: firstDeposit, mainResalt: results.last ?? 0, resalts: results, sum: sum)
     }
 }
 
