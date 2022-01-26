@@ -166,6 +166,8 @@ extension ViewController {
                 resultModel.depositTime.append(i)
             }
         }
+        
+        restModel = Results(period: depositTime, start: firstDeposit, mainResalt: results.last ?? 0, resalts: results, sum: sum)
     }
 }
 
